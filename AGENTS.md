@@ -27,10 +27,13 @@ cd dealdash-agent-kit
 ## Safe Defaults
 
 - Default to read-only.
+- Use `context.search` before guessing deal, screenshot, view log, or memory IDs.
 - Use `deals.view_logs` for LinkShot View Logs.
 - Use `screenshots.list_latest` for recent screenshot checks.
 - Use `scope=mine-and-shared` only when the user asks for team-shared records.
 - Redacted screenshot references must stay redacted unless the user has authorized screenshot access.
+- Use `memory.create` only after showing the exact note to the user.
+- Use `memory.archive` for stale memory; do not promise permanent deletion.
 
 ## Approval Needed
 

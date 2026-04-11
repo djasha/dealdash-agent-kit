@@ -42,16 +42,30 @@ Use placeholders in docs and public files:
 
 ## Read-Only First Checks
 
+- context search
 - latest screenshots
 - LinkShot View Logs
 - due view checks
 - deal summaries
 - contact or influencer lookup
 
+## MCP Resources And Prompts
+
+If your MCP host supports resources, read:
+
+- `dealdash://context/search`
+- `dealdash://linkshot/view-logs`
+- `dealdash://memory/active`
+
+If your MCP host supports prompts, start with:
+
+- `dealdash_read_only_start`
+- `dealdash_image_to_link`
+
 ## Image Uploads
 
 DealDash accepts PNG, JPG/JPEG, WebP, GIF, AVIF, and BMP images by default.
-The default image limit is 25MB. If a user sends SVG, HEIC, or TIFF, convert it
+The default image limit is 40MB. If a user sends SVG, HEIC, or TIFF, convert it
 to PNG, JPG, or WebP before calling the screenshot upload tool.
 
 ## Common Errors
@@ -61,5 +75,6 @@ to PNG, JPG, or WebP before calling the screenshot upload tool.
 - `agent_approval_required`: explain the change and ask for approval before retrying.
 - `agent_cross_account_denied`: stop. Do not guess IDs or try another account.
 - Empty screenshots/logs: check account, filters, LinkShot upload status, and shared/team scope.
+- Stale memory: list active memories, then archive the stale one.
 
 Agent reference: https://docs.drdj.me/internal/dealdash-agent-bridge-plugin

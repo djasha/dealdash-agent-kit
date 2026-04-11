@@ -1,6 +1,6 @@
 ---
 name: dealdash-agent-bridge
-description: Safely connect AI agents to DealDash MCP tools for screenshots, LinkShot View Logs, deals, links, contacts, tasks, suggestions, and approval-gated writes.
+description: Safely connect AI agents to DealDash MCP tools, resources, prompts, context search, memory, screenshots, LinkShot View Logs, deals, links, contacts, tasks, suggestions, and approval-gated writes.
 ---
 
 # DealDash Agent Bridge
@@ -48,6 +48,8 @@ Use the fewest links needed:
 - `short_links`: create from URL, list, stats, delete
 - `screenshots`: upload photo, capture URL, reserve, link to deal, get, list latest, delete
 - `deals`: search, get, get latest, create, update, find by URL, due views, view logs, progress
+- `context`: search and resource hints
+- `memory`: list, create, archive
 - `payments`: list, create, update, delete
 - `tasks`: list, get latest, create, complete, reopen
 - `contacts`: search, get, get latest, upsert, by phone, deals, notes, labels, counts, duplicates
@@ -60,6 +62,7 @@ Use the fewest links needed:
 
 Use these before any write action:
 
+- `context.search` for broad lookup across deals, screenshots, logs, links, people, and memory
 - `screenshots.list_latest` for recent screenshots
 - `deals.view_logs` for LinkShot View Logs and screenshot evidence
 - `deals.due_views` for LinkShot To-Do style checks
@@ -68,6 +71,8 @@ Use these before any write action:
 - `suggestions.pipeline_summary` for overview
 
 For shared data, use `scope=mine-and-shared` only when the user asks for shared team records.
+
+If exact operation details are needed, read `references/tools.md`. If an error appears, read `references/errors.md`. For workflow examples, read `references/examples.md`.
 
 ## Approval Rules
 
@@ -108,3 +113,4 @@ HEIC, or TIFF, convert it to PNG, JPG, or WebP first.
 - `invalid_media`: ask for PNG, JPG/JPEG, WebP, GIF, AVIF, or BMP image bytes under the configured size limit, or convert unsupported formats first.
 - `capture_blocked_private_url`: do not bypass in production.
 - Empty screenshots or logs: check the signed-in account, date filters, LinkShot upload status, and whether the user asked for shared/team records.
+- Stale memory: call `memory.list`, show the stale entry, then ask before `memory.archive`.

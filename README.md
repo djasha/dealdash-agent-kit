@@ -34,16 +34,19 @@ Then read these files in order:
 2. `prompts/ready-prompt.md`
 3. `mcp/MCP_SETUP.md`
 4. `skills/dealdash-agent-bridge/SKILL.md`
+5. only the reference files needed from `references/`
 
 ## What Agents Can Do First
 
 - show latest screenshots
 - show LinkShot View Logs
+- search DealDash context before guessing IDs
 - find deals, promo codes, creators, and view history
 - summarize what needs attention
 - shorten a link or upload an image when the user explicitly asks
+- save a useful memory only after showing the exact note to the user
 
-The first four are read-only checks. Short links and screenshot uploads create DealDash records, so ask before doing them.
+The first five are read-only checks. Short links, screenshot uploads, and memory creation create DealDash records, so ask before doing them.
 
 ## Important Safety Rules
 
@@ -70,6 +73,10 @@ The first four are read-only checks. Short links and screenshot uploads create D
 - `skills/dealdash-agent-bridge/SKILL.md`: instructions for agents
 - `mcp/MCP_SETUP.md`: plain MCP setup notes
 - `mcp/dealdash-agent-bridge.mcp.example.json`: placeholder-only MCP example
+- `references/tools.md`: tool, resource, prompt map
+- `references/errors.md`: troubleshooting notes
+- `references/examples.md`: short workflows agents can follow
+- `references/render-supabase.md`: useful free/low-friction Render and Supabase helper tools
 - `SECURITY.md`: what must never be committed here
 
 ## Why This Repo Exists

@@ -28,12 +28,14 @@ First actions:
    cd dealdash-agent-kit
 3. Tell me the shortest safe setup path for my AI app.
 4. After the connection works, run only read-only checks first:
+   - DealDash context search
    - latest screenshots
    - LinkShot View Logs
    - LinkShot To-Do / due views
 5. When I explicitly ask for it:
    - shorten a URL with the short link tool
    - upload an image with the screenshot tool and return the short link
+   - save a useful memory only after telling me what it will save
 6. If something fails, explain the error in plain language and give me one next step.
 
 Success:
