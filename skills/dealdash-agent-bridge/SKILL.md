@@ -1,0 +1,89 @@
+---
+name: dealdash-agent-bridge
+description: Safely connect AI agents to DealDash MCP tools for screenshots, LinkShot View Logs, deals, links, contacts, tasks, suggestions, and approval-gated writes.
+---
+
+# DealDash Agent Bridge
+
+Use this skill when a user asks an AI agent to help with DealDash.
+
+## Start Human-Friendly
+
+If the user is not technical, send them to:
+
+- DealDash -> **Tools** -> **AI Agent Setup**
+- https://docs.drdj.me/agents/agent-quick-start
+
+Tell them to copy the ready prompt from the dashboard.
+
+## Runtime Contract
+
+- MCP server: `dealdash-agent-bridge`
+- Simple guide: `https://docs.drdj.me/agents/agent-quick-start`
+- Agent reference: `https://docs.drdj.me/internal/dealdash-agent-bridge-plugin`
+- API surface: `https://docs.drdj.me/backend/api-surface`
+- Public kit: `https://github.com/djasha/dealdash-agent-kit`
+- Required secret name: `DEALDASH_AGENT_SERVICE_SECRET`
+- Required acting user: `DEALDASH_AGENT_DEFAULT_USER_ID` or per-call `actingUserId`
+- Default channel: `DEALDASH_AGENT_CHANNEL`, usually `mcp:generic`
+- Default actor: `DEALDASH_AGENT_ACTOR_ID`, usually `dealdash-agent-bridge`
+
+Never ask a public chat user to paste service secrets, approval confirmation secrets, payment payloads, passwords, or local filesystem paths.
+
+## Tool Families
+
+- `short_links`: create from URL, list, stats, delete
+- `screenshots`: upload photo, capture URL, reserve, link to deal, get, list latest, delete
+- `deals`: search, get, get latest, create, update, find by URL, due views, view logs, progress
+- `payments`: list, create, update, delete
+- `tasks`: list, get latest, create, complete, reopen
+- `contacts`: search, get, get latest, upsert, by phone, deals, notes, labels, counts, duplicates
+- `influencers`: search, get, get latest, upsert, by phone, by promo code, stats, last progress
+- `activity`: feed and analytics
+- `suggestions`: pipeline summary, next actions, payment followups, content followups
+- `approvals`: request and status
+
+## Read-Only First
+
+Use these before any write action:
+
+- `screenshots.list_latest` for recent screenshots
+- `deals.view_logs` for LinkShot View Logs and screenshot evidence
+- `deals.due_views` for LinkShot To-Do style checks
+- `deals.search` for deal lookup
+- `contacts.search` or `influencers.search` for people lookup
+- `suggestions.pipeline_summary` for overview
+
+For shared data, use `scope=mine-and-shared` only when the user asks for shared team records.
+
+## Approval Rules
+
+- Tier 0 reads: no approval required.
+- Tier 1 low-risk writes: short links, screenshot uploads, screenshot linking, notes, labels, and tasks may be allowed.
+- Tier 2 sensitive writes: deal updates, payments, deletes, and visibility changes require approval.
+
+Ask before any write. Explain what will change and why.
+
+## LinkShot View Logs
+
+Use `deals.view_logs` when the user asks about:
+
+- checked views
+- LinkShot logs
+- screenshot evidence
+- who uploaded or shared data
+- platform totals
+- missing platform labels
+
+Return checked date, total views, per-platform views, missing platforms, visible screenshot links, redacted attachment counts, owner context, and share context.
+
+Keep redacted attachment references redacted unless DealDash returns a visible screenshot link.
+
+## Error Handling
+
+- `agent_auth_failed`: ask the user or admin to check the secure Agent key setup.
+- `agent_route_not_allowed`: stop and use only allowlisted tools.
+- `agent_approval_required`: request approval before retrying.
+- `agent_cross_account_denied`: stop. Do not guess IDs.
+- `invalid_media`: ask for png, jpeg, or webp image bytes under the configured size limit.
+- `capture_blocked_private_url`: do not bypass in production.
