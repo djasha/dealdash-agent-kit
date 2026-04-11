@@ -15,6 +15,20 @@
         "DEALDASH_AGENT_CHANNEL": "mcp:generic",
         "DEALDASH_AGENT_ACTOR_ID": "dealdash-agent-bridge"
       }
+    },
+    "render-deploy": {
+      "disabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.render.com/mcp",
+        "--header",
+        "Authorization: Bearer ${RENDER_API_KEY}"
+      ],
+      "env": {
+        "RENDER_API_KEY": "<YOUR_RENDER_API_KEY>"
+      }
     }
   }
 }

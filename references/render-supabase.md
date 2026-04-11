@@ -6,11 +6,12 @@ Use these only when the user asks about deployment, secrets, logs, or database/s
 
 Helpful free/low-friction options:
 
-- Render official skills: deploy, debug, and monitor apps from Codex, Claude Code, Cursor, and similar tools.
 - Render MCP server: inspect services, deploys, logs, metrics, and databases from MCP-capable clients.
 - Render `llms.txt` and markdown docs: useful for agent-readable deployment help.
 
-Never print Render API keys or service environment values.
+Use `https://mcp.render.com/mcp` with a secure `RENDER_API_KEY` setting.
+
+Never print Render API keys or service environment values. Do not update Render environment variables unless the user approves the exact service, key, and new value.
 
 ## Supabase
 

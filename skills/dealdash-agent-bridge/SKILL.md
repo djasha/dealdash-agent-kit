@@ -43,6 +43,8 @@ Use the fewest links needed:
 2. Use this public kit for setup files and commands.
 3. Open the agent reference only when exact operation names, routes, headers, or schemas are needed.
 
+Use `skills/render-deploy/SKILL.md` and Render MCP only for deployment infrastructure checks. Render MCP is not a replacement for DealDash app-data tools.
+
 ## Tool Families
 
 - `short_links`: create from URL, list, stats, delete

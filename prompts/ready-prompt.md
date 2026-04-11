@@ -12,12 +12,14 @@ Use these sources in order:
 1. Simple user guide: https://docs.drdj.me/agents/agent-quick-start
 2. Agent setup files: https://github.com/djasha/dealdash-agent-kit
 3. Exact tool reference, only if needed: https://docs.drdj.me/internal/dealdash-agent-bridge-plugin
+4. Optional Render deploy plugin, only for deploy logs/infrastructure: https://docs.drdj.me/agents/render-mcp-setup
 
 Rules:
 - Start read-only.
 - Do not ask for my DealDash password.
 - Do not ask me to paste secrets into chat.
 - If an Agent key is needed, ask me to add it only to secure MCP/environment settings.
+- If a Render key is needed for deploy checks, ask me to add RENDER_API_KEY only to secure MCP/environment settings.
 - Do not print, store, or commit secrets.
 - Wait for my approval before any write, delete, payment, sharing, or visibility change.
 
@@ -32,6 +34,7 @@ First actions:
    - latest screenshots
    - LinkShot View Logs
    - LinkShot To-Do / due views
+   - Render latest deploy/log status only if I ask for deployment help
 5. When I explicitly ask for it:
    - shorten a URL with the short link tool
    - upload an image with the screenshot tool and return the short link

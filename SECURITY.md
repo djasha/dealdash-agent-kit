@@ -5,6 +5,7 @@ This repo is public.
 Do not commit:
 
 - real Agent keys
+- Render API keys
 - DealDash passwords
 - Supabase keys or URLs that are not already public
 - database URLs
@@ -20,6 +21,7 @@ Use placeholders instead:
 - `<DEALDASH_AGENT_SERVICE_SECRET>`
 - `<DEALDASH_USER_ID>`
 - `<DEALDASH_SUPABASE_USER_ID>`
+- `<YOUR_RENDER_API_KEY>`
 
 If a secret is accidentally committed:
 

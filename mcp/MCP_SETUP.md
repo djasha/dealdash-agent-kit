@@ -39,6 +39,7 @@ Use placeholders in docs and public files:
 - `DEALDASH_AGENT_DEFAULT_SUPABASE_USER_ID`: `<DEALDASH_SUPABASE_USER_ID>`
 - `DEALDASH_AGENT_CHANNEL`: `mcp:generic`
 - `DEALDASH_AGENT_ACTOR_ID`: `dealdash-agent-bridge`
+- `RENDER_API_KEY`: `<YOUR_RENDER_API_KEY>` only for optional Render MCP deploy/log checks
 
 ## Read-Only First Checks
 
@@ -78,3 +79,62 @@ to PNG, JPG, or WebP before calling the screenshot upload tool.
 - Stale memory: list active memories, then archive the stale one.
 
 Agent reference: https://docs.drdj.me/internal/dealdash-agent-bridge-plugin
+
+## Optional Render MCP
+
+Use Render MCP only for deployment infrastructure:
+
+- services
+- deploy status
+- logs
+- metrics
+- databases
+- environment-variable troubleshooting
+
+Use DealDash MCP for screenshots, LinkShot logs, short links, deals, contacts,
+tasks, payments, and memory.
+
+Hosted MCP URL:
+
+```text
+https://mcp.render.com/mcp
+```
+
+Secure env name:
+
+```text
+RENDER_API_KEY
+```
+
+For HTTP MCP clients:
+
+```toml
+[mcp_servers.render]
+url = "https://mcp.render.com/mcp"
+http_headers = { Authorization = "Bearer <YOUR_RENDER_API_KEY>" }
+```
+
+For mcp-remote clients:
+
+```json
+{
+  "mcpServers": {
+    "render": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.render.com/mcp",
+        "--header",
+        "Authorization: Bearer ${RENDER_API_KEY}"
+      ],
+      "env": {
+        "RENDER_API_KEY": "<YOUR_RENDER_API_KEY>"
+      }
+    }
+  }
+}
+```
+
+Simple guide: https://docs.drdj.me/agents/render-mcp-setup
+Official docs: https://render.com/docs/mcp-server
