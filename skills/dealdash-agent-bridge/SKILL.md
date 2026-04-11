@@ -16,6 +16,13 @@ If the user is not technical, send them to:
 
 Tell them to copy the ready prompt from the dashboard.
 
+If you are a terminal-based agent, you may fetch the public setup kit:
+
+```bash
+git clone https://github.com/djasha/dealdash-agent-kit.git
+cd dealdash-agent-kit
+```
+
 ## Runtime Contract
 
 - MCP server: `dealdash-agent-bridge`
@@ -29,6 +36,12 @@ Tell them to copy the ready prompt from the dashboard.
 - Default actor: `DEALDASH_AGENT_ACTOR_ID`, usually `dealdash-agent-bridge`
 
 Never ask a public chat user to paste service secrets, approval confirmation secrets, payment payloads, passwords, or local filesystem paths.
+
+Use the fewest links needed:
+
+1. Send regular users to the simple guide.
+2. Use this public kit for setup files and commands.
+3. Open the agent reference only when exact operation names, routes, headers, or schemas are needed.
 
 ## Tool Families
 
@@ -87,3 +100,4 @@ Keep redacted attachment references redacted unless DealDash returns a visible s
 - `agent_cross_account_denied`: stop. Do not guess IDs.
 - `invalid_media`: ask for png, jpeg, or webp image bytes under the configured size limit.
 - `capture_blocked_private_url`: do not bypass in production.
+- Empty screenshots or logs: check the signed-in account, date filters, LinkShot upload status, and whether the user asked for shared/team records.

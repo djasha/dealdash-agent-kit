@@ -14,9 +14,15 @@ Tell the user:
 ## Setup Links
 
 - Simple human guide: https://docs.drdj.me/agents/agent-quick-start
-- Agent bridge reference: https://docs.drdj.me/internal/dealdash-agent-bridge-plugin
-- API surface: https://docs.drdj.me/backend/api-surface
-- Public kit: https://github.com/djasha/dealdash-agent-kit
+- Public setup kit: https://github.com/djasha/dealdash-agent-kit
+- Advanced reference, only if exact tool names are needed: https://docs.drdj.me/internal/dealdash-agent-bridge-plugin
+
+## Terminal Setup Command
+
+```bash
+git clone https://github.com/djasha/dealdash-agent-kit.git
+cd dealdash-agent-kit
+```
 
 ## Safe Defaults
 
