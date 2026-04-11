@@ -41,8 +41,9 @@ Then read these files in order:
 - show LinkShot View Logs
 - find deals, promo codes, creators, and view history
 - summarize what needs attention
+- shorten a link or upload an image when the user explicitly asks
 
-These are read-only checks. Ask before changing anything.
+The first four are read-only checks. Short links and screenshot uploads create DealDash records, so ask before doing them.
 
 ## Important Safety Rules
 
@@ -54,13 +55,14 @@ These are read-only checks. Ask before changing anything.
 
 ## Common Problems
 
-| Problem | What To Do |
-| --- | --- |
-| User only wants help, not setup details | Send them to DealDash > Tools > AI Agent Setup and ask them to copy the prompt. |
-| Agent key missing | Ask the user or admin to add `DEALDASH_AGENT_SERVICE_SECRET` to secure MCP/environment settings. Do not ask for the value in chat. |
-| Password requested by mistake | Stop and correct course. DealDash passwords must not be pasted into chat. |
-| No screenshots or LinkShot logs | Check account, filters, upload status, and whether shared/team records should be included. |
-| Write action blocked | Explain what would change and ask for approval before retrying. |
+| Problem                                 | What To Do                                                                                                                         |
+| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| User only wants help, not setup details | Send them to DealDash > Tools > AI Agent Setup and ask them to copy the prompt.                                                    |
+| Agent key missing                       | Ask the user or admin to add `DEALDASH_AGENT_SERVICE_SECRET` to secure MCP/environment settings. Do not ask for the value in chat. |
+| Password requested by mistake           | Stop and correct course. DealDash passwords must not be pasted into chat.                                                          |
+| No screenshots or LinkShot logs         | Check account, filters, upload status, and whether shared/team records should be included.                                         |
+| Image upload fails                      | Use PNG, JPG/JPEG, WebP, GIF, AVIF, or BMP up to the configured limit. Convert SVG, HEIC, or TIFF to PNG/JPG/WebP first.           |
+| Write action blocked                    | Explain what would change and ask for approval before retrying.                                                                    |
 
 ## Files
 

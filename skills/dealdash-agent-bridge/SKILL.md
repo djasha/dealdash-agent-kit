@@ -92,12 +92,19 @@ Return checked date, total views, per-platform views, missing platforms, visible
 
 Keep redacted attachment references redacted unless DealDash returns a visible screenshot link.
 
+## Image Uploads
+
+Use `screenshots.upload_photo` when the user explicitly asks to upload an image
+or turn an image into a short DealDash link. PNG, JPG/JPEG, WebP, GIF, AVIF, and
+BMP are accepted by default up to the configured limit. If the user sends SVG,
+HEIC, or TIFF, convert it to PNG, JPG, or WebP first.
+
 ## Error Handling
 
 - `agent_auth_failed`: ask the user or admin to check the secure Agent key setup.
 - `agent_route_not_allowed`: stop and use only allowlisted tools.
 - `agent_approval_required`: request approval before retrying.
 - `agent_cross_account_denied`: stop. Do not guess IDs.
-- `invalid_media`: ask for png, jpeg, or webp image bytes under the configured size limit.
+- `invalid_media`: ask for PNG, JPG/JPEG, WebP, GIF, AVIF, or BMP image bytes under the configured size limit, or convert unsupported formats first.
 - `capture_blocked_private_url`: do not bypass in production.
 - Empty screenshots or logs: check the signed-in account, date filters, LinkShot upload status, and whether the user asked for shared/team records.

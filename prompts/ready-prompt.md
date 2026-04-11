@@ -31,7 +31,10 @@ First actions:
    - latest screenshots
    - LinkShot View Logs
    - LinkShot To-Do / due views
-5. If something fails, explain the error in plain language and give me one next step.
+5. When I explicitly ask for it:
+   - shorten a URL with the short link tool
+   - upload an image with the screenshot tool and return the short link
+6. If something fails, explain the error in plain language and give me one next step.
 
 Success:
 Show what connected, what DealDash data you can read, and what still needs approval.

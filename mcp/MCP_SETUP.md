@@ -48,6 +48,12 @@ Use placeholders in docs and public files:
 - deal summaries
 - contact or influencer lookup
 
+## Image Uploads
+
+DealDash accepts PNG, JPG/JPEG, WebP, GIF, AVIF, and BMP images by default.
+The default image limit is 25MB. If a user sends SVG, HEIC, or TIFF, convert it
+to PNG, JPG, or WebP before calling the screenshot upload tool.
+
 ## Common Errors
 
 - `agent_auth_failed`: the secure Agent key is missing or wrong. Ask an admin to update secure MCP/environment settings.
