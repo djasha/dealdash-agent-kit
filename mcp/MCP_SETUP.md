@@ -30,6 +30,20 @@ Do not write real secrets into this repo.
 5. Never print secrets back to the user.
 6. Ask before write actions.
 
+If `agent_auth_start` is unavailable because MCP is not connected yet, use the
+public HTTPS login-link bootstrap instead:
+
+```bash
+curl -fsS -X POST https://dealdash.neonoir.ai/api/agent/auth/start \
+  -H 'content-type: application/json' \
+  --data '{"actorId":"openclaw-agent","channel":"openclaw:setup"}'
+```
+
+Send only `auth.authorizeUrl` to the user. Keep `auth.deviceCode`,
+`auth.statusEndpoint`, and any approved token inside your tool/session state.
+Normal setup is not blocked by missing internal operator env vars or deployment
+settings.
+
 ## Login-Link Auth
 
 Normal user setup does not require the user to paste keys.

@@ -9,7 +9,12 @@ Keep troubleshooting short and give the user one next step.
 - `invalid_agent_context`: the request id header is missing, or operator-managed auth is missing acting user context.
 - `acting_user_not_found`: the approved DealDash user is no longer available.
 
-Never ask the user to paste a service secret, API key, internal ID, or password into chat.
+If MCP auth tools are unavailable but HTTPS is available, start login-link auth
+directly with `POST https://dealdash.neonoir.ai/api/agent/auth/start`, send only
+`auth.authorizeUrl`, and keep `auth.deviceCode` inside tool state.
+
+Never ask the user to paste a service secret, API key, internal ID, deployment
+key, or password into chat.
 
 ## Approval
 

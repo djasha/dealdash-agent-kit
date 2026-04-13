@@ -16,11 +16,17 @@ Safety rules:
 - Do not ask for my DealDash password or any secret in chat.
 - If DealDash is not connected, start DealDash login authorization and send me the approval link.
 - Do not ask me for API keys, service secrets, or internal IDs.
+- Do not require internal operator secrets, user IDs, or deploy settings for normal user setup.
 - First show only data you can read.
 - Before creating, updating, deleting, sharing, sending messages, payments, or saving memory, explain the change and wait for my approval.
 
+Connection bootstrap:
+- If MCP tool agent_auth_start is available, call it and send me only the returned authorizeUrl.
+- If MCP is not connected but you can make HTTPS requests, POST to https://dealdash.neonoir.ai/api/agent/auth/start with JSON {"actorId":"openclaw-agent","channel":"openclaw:setup"}, send me only auth.authorizeUrl, keep auth.deviceCode private inside your session, then poll auth.statusEndpoint.
+- If you cannot call MCP tools or make HTTPS requests, say that your AI environment lacks tool access. Do not ask me for internal env vars.
+
 First read-only checks:
-1. If not connected, create a DealDash login approval link and wait for me to approve it.
+1. If not connected, create a DealDash login approval link with MCP or direct HTTPS and wait for me to approve it.
 2. Search DealDash context for my account.
 3. Show latest screenshots.
 4. Show recent LinkShot View Logs.

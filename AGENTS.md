@@ -29,7 +29,17 @@ cd dealdash-agent-kit
 
 - Default to read-only.
 - If not connected, use `agent_auth_start` and send the returned `authorizeUrl` to the user.
-- Poll with `agent_auth_status` only after the user opens the link and approves.
+- If `agent_auth_start` is unavailable because MCP is not connected, start auth with direct HTTPS:
+
+  ```bash
+  curl -fsS -X POST https://dealdash.neonoir.ai/api/agent/auth/start \
+    -H 'content-type: application/json' \
+    --data '{"actorId":"openclaw-agent","channel":"openclaw:setup"}'
+  ```
+
+- Send only `auth.authorizeUrl` to the user. Keep `auth.deviceCode`, `auth.statusEndpoint`, and any approved token inside your tool/session state.
+- Poll with `agent_auth_status` or `auth.statusEndpoint` only after the user opens the link and approves.
+- Do not report normal setup as blocked by missing internal operator env vars or deployment settings.
 - Use `context.search` before guessing deal, screenshot, view log, or memory IDs.
 - Use `deals.view_logs` for LinkShot View Logs.
 - Use `screenshots.list_latest` for recent screenshot checks.

@@ -12,7 +12,7 @@
         "DEALDASH_AGENT_CHANNEL": "mcp:generic",
         "DEALDASH_AGENT_ACTOR_ID": "dealdash-agent-bridge"
       },
-      "note": "Normal setup uses agent_auth_start to send the user a DealDash login approval link. Do not ask normal users for service secrets or internal IDs."
+      "note": "Normal setup uses agent_auth_start to send the user a DealDash login approval link. If MCP is not available yet, POST https://dealdash.neonoir.ai/api/agent/auth/start and send only auth.authorizeUrl. Do not ask normal users for service secrets or internal IDs."
     }
   }
 }

@@ -55,6 +55,7 @@ The first five are read-only checks. Short links, screenshot uploads, and memory
 - Do not store real keys in this repo.
 - Normal users should approve the DealDash login link, not paste API keys.
 - Service secrets are only for internal operator-managed deployments.
+- Missing MCP setup is not a reason to ask for secrets. If HTTPS is available, use the public login-link start endpoint.
 - Start read-only, then ask for approval before writes.
 - Never send payment details, secrets, or private local file paths unless the user explicitly approves the exact action.
 
@@ -63,7 +64,7 @@ The first five are read-only checks. Short links, screenshot uploads, and memory
 | Problem                                 | What To Do                                                                                                               |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | User only wants help, not setup details | Send them to DealDash > Tools > AI Agent Setup and ask them to copy the prompt.                                          |
-| Agent asks for API keys or IDs          | Ask it to use DealDash login-link auth. Normal users should not paste service secrets or internal IDs.                   |
+| Agent asks for API keys or IDs          | Ask it to use DealDash login-link auth with MCP or direct HTTPS. Normal users should not paste service secrets or IDs.   |
 | Password requested by mistake           | Stop and correct course. DealDash passwords must not be pasted into chat.                                                |
 | No screenshots or LinkShot logs         | Check account, filters, upload status, and whether shared/team records should be included.                               |
 | Image upload fails                      | Use PNG, JPG/JPEG, WebP, GIF, AVIF, or BMP up to the configured limit. Convert SVG, HEIC, or TIFF to PNG/JPG/WebP first. |

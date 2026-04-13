@@ -30,7 +30,8 @@ cd dealdash-agent-kit
 - Agent reference: `https://docs.drdj.me/internal/dealdash-agent-bridge-plugin`
 - API surface: `https://docs.drdj.me/backend/api-surface`
 - Public kit: `https://github.com/djasha/dealdash-agent-kit`
-- Normal auth: call `agent_auth_start`, send the returned DealDash approval link to the user, then poll `agent_auth_status`.
+- Normal auth: call `agent_auth_start`, send only the returned DealDash approval link to the user, then poll `agent_auth_status`.
+- Direct HTTPS bootstrap: if MCP is not installed yet but HTTPS requests are available, `POST https://dealdash.neonoir.ai/api/agent/auth/start`, send only `auth.authorizeUrl`, keep `auth.deviceCode` private in tool state, and poll `auth.statusEndpoint`.
 - Internal operator auth: service-secret mode must already be preconfigured; never ask the user for service secrets or acting-user IDs.
 - Default channel: `DEALDASH_AGENT_CHANNEL`, usually `mcp:generic`
 - Default actor: `DEALDASH_AGENT_ACTOR_ID`, usually `dealdash-agent-bridge`
@@ -63,6 +64,20 @@ Use the fewest links needed:
 If the bridge is not connected, start with `agent_auth_start` and wait for the
 user to approve the DealDash login link. After approval, use these before any
 write action:
+
+If `agent_auth_start` is unavailable because MCP is not configured, start the
+same login-link flow with direct HTTPS instead:
+
+```bash
+curl -fsS -X POST https://dealdash.neonoir.ai/api/agent/auth/start \
+  -H 'content-type: application/json' \
+  --data '{"actorId":"openclaw-agent","channel":"openclaw:setup"}'
+```
+
+Send only `auth.authorizeUrl` to the user. Keep `auth.deviceCode`,
+`auth.statusEndpoint`, and any approved token inside your tool/session state.
+Do not ask for internal operator secrets, user IDs, or deployment settings for
+normal setup.
 
 - `context.search` for broad lookup across deals, screenshots, logs, links, people, and memory
 - `screenshots.list_latest` for recent screenshots
@@ -108,8 +123,8 @@ HEIC, or TIFF, convert it to PNG, JPG, or WebP first.
 
 ## Error Handling
 
-- `missing_agent_auth`: start DealDash login authorization and send the approval link to the user.
-- `agent_auth_failed`: the agent token is missing, expired, or invalid. Start a new login authorization link.
+- `missing_agent_auth`: start DealDash login authorization with MCP or direct HTTPS and send the approval link to the user.
+- `agent_auth_failed`: the agent token is missing, expired, or invalid. Start a new login authorization link with MCP or direct HTTPS.
 - `agent_route_not_allowed`: stop and use only allowlisted tools.
 - `agent_approval_required`: request approval before retrying.
 - `agent_cross_account_denied`: stop. Do not guess IDs.
