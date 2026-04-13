@@ -4,12 +4,12 @@ Keep troubleshooting short and give the user one next step.
 
 ## Auth
 
-- `agent_bridge_not_configured`: production is missing `DEALDASH_AGENT_SERVICE_SECRET`.
-- `agent_auth_failed`: secure Agent key is missing or wrong.
-- `invalid_agent_context`: acting user, channel, actor, or request id header is missing.
-- `acting_user_not_found`: the configured DealDash user id is wrong.
+- `missing_agent_auth`: start DealDash login authorization and send the approval link to the user.
+- `agent_auth_failed`: the agent token is missing, expired, or invalid. Start a new login authorization link.
+- `invalid_agent_context`: the request id header is missing, or operator-managed auth is missing acting user context.
+- `acting_user_not_found`: the approved DealDash user is no longer available.
 
-Never ask the user to paste a service secret into chat.
+Never ask the user to paste a service secret, API key, internal ID, or password into chat.
 
 ## Approval
 

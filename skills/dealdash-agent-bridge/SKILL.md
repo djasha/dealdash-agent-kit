@@ -30,20 +30,18 @@ cd dealdash-agent-kit
 - Agent reference: `https://docs.drdj.me/internal/dealdash-agent-bridge-plugin`
 - API surface: `https://docs.drdj.me/backend/api-surface`
 - Public kit: `https://github.com/djasha/dealdash-agent-kit`
-- Required secret name: `DEALDASH_AGENT_SERVICE_SECRET`
-- Required acting user: `DEALDASH_AGENT_DEFAULT_USER_ID` or per-call `actingUserId`
+- Normal auth: call `agent_auth_start`, send the returned DealDash approval link to the user, then poll `agent_auth_status`.
+- Internal operator auth: service-secret mode must already be preconfigured; never ask the user for service secrets or acting-user IDs.
 - Default channel: `DEALDASH_AGENT_CHANNEL`, usually `mcp:generic`
 - Default actor: `DEALDASH_AGENT_ACTOR_ID`, usually `dealdash-agent-bridge`
 
-Never ask a public chat user to paste service secrets, approval confirmation secrets, payment payloads, passwords, or local filesystem paths.
+Never ask a public chat user to paste service secrets, approval confirmation secrets, internal IDs, payment payloads, passwords, or local filesystem paths.
 
 Use the fewest links needed:
 
 1. Send regular users to the simple guide.
 2. Use this public kit for setup files and commands.
 3. Open the agent reference only when exact operation names, routes, headers, or schemas are needed.
-
-Use `skills/render-deploy/SKILL.md` and Render MCP only for deployment infrastructure checks. Render MCP is not a replacement for DealDash app-data tools.
 
 ## Tool Families
 
@@ -62,7 +60,9 @@ Use `skills/render-deploy/SKILL.md` and Render MCP only for deployment infrastru
 
 ## Read-Only First
 
-Use these before any write action:
+If the bridge is not connected, start with `agent_auth_start` and wait for the
+user to approve the DealDash login link. After approval, use these before any
+write action:
 
 - `context.search` for broad lookup across deals, screenshots, logs, links, people, and memory
 - `screenshots.list_latest` for recent screenshots
@@ -108,7 +108,8 @@ HEIC, or TIFF, convert it to PNG, JPG, or WebP first.
 
 ## Error Handling
 
-- `agent_auth_failed`: ask the user or admin to check the secure Agent key setup.
+- `missing_agent_auth`: start DealDash login authorization and send the approval link to the user.
+- `agent_auth_failed`: the agent token is missing, expired, or invalid. Start a new login authorization link.
 - `agent_route_not_allowed`: stop and use only allowlisted tools.
 - `agent_approval_required`: request approval before retrying.
 - `agent_cross_account_denied`: stop. Do not guess IDs.

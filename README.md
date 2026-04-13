@@ -15,7 +15,8 @@ Regular users do not need to read GitHub first.
 2. Go to **Tools > AI Agent Setup**.
 3. Click **Copy prompt**.
 4. Paste that prompt into your AI app.
-5. Start read-only.
+5. If the agent is not connected, open the DealDash login approval link it sends back.
+6. Start read-only.
 
 Simple guide: https://docs.drdj.me/agents/agent-quick-start
 
@@ -34,8 +35,7 @@ Then read these files in order:
 2. `prompts/ready-prompt.md`
 3. `mcp/MCP_SETUP.md`
 4. `skills/dealdash-agent-bridge/SKILL.md`
-5. `skills/render-deploy/SKILL.md` only for Render deploy/log help
-6. only the reference files needed from `references/`
+5. only the reference files needed from `references/`
 
 ## What Agents Can Do First
 
@@ -49,39 +49,35 @@ Then read these files in order:
 
 The first five are read-only checks. Short links, screenshot uploads, and memory creation create DealDash records, so ask before doing them.
 
-Use Render MCP only when the user asks about deployment infrastructure, logs, metrics, services, databases, or environment-variable setup. Render MCP is not for DealDash app data.
-
 ## Important Safety Rules
 
 - Do not paste your DealDash password into an AI chat.
 - Do not store real keys in this repo.
-- Put Agent keys only into secure MCP or environment settings.
+- Normal users should approve the DealDash login link, not paste API keys.
+- Service secrets are only for internal operator-managed deployments.
 - Start read-only, then ask for approval before writes.
 - Never send payment details, secrets, or private local file paths unless the user explicitly approves the exact action.
 
 ## Common Problems
 
-| Problem                                 | What To Do                                                                                                                         |
-| --------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| User only wants help, not setup details | Send them to DealDash > Tools > AI Agent Setup and ask them to copy the prompt.                                                    |
-| Agent key missing                       | Ask the user or admin to add `DEALDASH_AGENT_SERVICE_SECRET` to secure MCP/environment settings. Do not ask for the value in chat. |
-| Render key missing                      | Ask the user or admin to add `RENDER_API_KEY` to secure MCP/environment settings. Do not ask for the value in chat.                |
-| Password requested by mistake           | Stop and correct course. DealDash passwords must not be pasted into chat.                                                          |
-| No screenshots or LinkShot logs         | Check account, filters, upload status, and whether shared/team records should be included.                                         |
-| Image upload fails                      | Use PNG, JPG/JPEG, WebP, GIF, AVIF, or BMP up to the configured limit. Convert SVG, HEIC, or TIFF to PNG/JPG/WebP first.           |
-| Write action blocked                    | Explain what would change and ask for approval before retrying.                                                                    |
+| Problem                                 | What To Do                                                                                                               |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| User only wants help, not setup details | Send them to DealDash > Tools > AI Agent Setup and ask them to copy the prompt.                                          |
+| Agent asks for API keys or IDs          | Ask it to use DealDash login-link auth. Normal users should not paste service secrets or internal IDs.                   |
+| Password requested by mistake           | Stop and correct course. DealDash passwords must not be pasted into chat.                                                |
+| No screenshots or LinkShot logs         | Check account, filters, upload status, and whether shared/team records should be included.                               |
+| Image upload fails                      | Use PNG, JPG/JPEG, WebP, GIF, AVIF, or BMP up to the configured limit. Convert SVG, HEIC, or TIFF to PNG/JPG/WebP first. |
+| Write action blocked                    | Explain what would change and ask for approval before retrying.                                                          |
 
 ## Files
 
 - `prompts/ready-prompt.md`: prompt users can paste into an AI app
 - `skills/dealdash-agent-bridge/SKILL.md`: instructions for agents
-- `skills/render-deploy/SKILL.md`: optional Render MCP deploy/log instructions
 - `mcp/MCP_SETUP.md`: plain MCP setup notes
 - `mcp/dealdash-agent-bridge.mcp.example.json`: placeholder-only MCP example
 - `references/tools.md`: tool, resource, prompt map
 - `references/errors.md`: troubleshooting notes
 - `references/examples.md`: short workflows agents can follow
-- `references/render-supabase.md`: useful free/low-friction Render and Supabase helper tools
 - `SECURITY.md`: what must never be committed here
 
 ## Why This Repo Exists
@@ -91,7 +87,6 @@ The DealDash dashboard gives regular users one copy/paste prompt. This public re
 ## Agent-Optimized References
 
 - Agent bridge reference: https://docs.drdj.me/internal/dealdash-agent-bridge-plugin
-- Render MCP setup: https://docs.drdj.me/agents/render-mcp-setup
 - API surface: https://docs.drdj.me/backend/api-surface
 - Task routing: https://docs.drdj.me/agents/task-routing
 

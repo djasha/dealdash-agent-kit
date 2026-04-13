@@ -9,26 +9,10 @@
       ],
       "env": {
         "DEALDASH_AGENT_BASE_URL": "https://dealdash.neonoir.ai",
-        "DEALDASH_AGENT_SERVICE_SECRET": "<DEALDASH_AGENT_SERVICE_SECRET>",
-        "DEALDASH_AGENT_DEFAULT_USER_ID": "<DEALDASH_USER_ID>",
-        "DEALDASH_AGENT_DEFAULT_SUPABASE_USER_ID": "<DEALDASH_SUPABASE_USER_ID>",
         "DEALDASH_AGENT_CHANNEL": "mcp:generic",
         "DEALDASH_AGENT_ACTOR_ID": "dealdash-agent-bridge"
-      }
-    },
-    "render-deploy": {
-      "disabled": true,
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.render.com/mcp",
-        "--header",
-        "Authorization: Bearer ${RENDER_API_KEY}"
-      ],
-      "env": {
-        "RENDER_API_KEY": "<YOUR_RENDER_API_KEY>"
-      }
+      },
+      "note": "Normal setup uses agent_auth_start to send the user a DealDash login approval link. Do not ask normal users for service secrets or internal IDs."
     }
   }
 }

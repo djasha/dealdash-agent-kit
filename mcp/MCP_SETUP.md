@@ -24,22 +24,24 @@ Do not write real secrets into this repo.
 ## Safe Setup
 
 1. Start read-only.
-2. Put keys only into secure environment or MCP settings.
-3. Never paste passwords into chat.
-4. Never print secrets back to the user.
-5. Ask before write actions.
+2. If the bridge is not connected, call `agent_auth_start` and send the returned `authorizeUrl` to the user.
+3. Poll with `agent_auth_status` after the user signs in and approves the link.
+4. Never ask normal users for API keys, service secrets, internal IDs, or passwords.
+5. Never print secrets back to the user.
+6. Ask before write actions.
 
-## Required Values
+## Login-Link Auth
 
-Use placeholders in docs and public files:
+Normal user setup does not require the user to paste keys.
 
-- `DEALDASH_AGENT_BASE_URL`: `https://dealdash.neonoir.ai`
-- `DEALDASH_AGENT_SERVICE_SECRET`: `<DEALDASH_AGENT_SERVICE_SECRET>`
-- `DEALDASH_AGENT_DEFAULT_USER_ID`: `<DEALDASH_USER_ID>`
-- `DEALDASH_AGENT_DEFAULT_SUPABASE_USER_ID`: `<DEALDASH_SUPABASE_USER_ID>`
-- `DEALDASH_AGENT_CHANNEL`: `mcp:generic`
-- `DEALDASH_AGENT_ACTOR_ID`: `dealdash-agent-bridge`
-- `RENDER_API_KEY`: `<YOUR_RENDER_API_KEY>` only for optional Render MCP deploy/log checks
+1. Start authorization with `agent_auth_start`.
+2. Send the returned DealDash approval link to the user.
+3. The user opens the link, signs in, and approves.
+4. Poll with `agent_auth_status`.
+5. After approval, the bridge stores the scoped token inside the MCP process.
+
+Operator-managed service-secret deployments are internal-only and must already
+be preconfigured. They are not part of the normal user prompt.
 
 ## Read-Only First Checks
 
@@ -71,7 +73,8 @@ to PNG, JPG, or WebP before calling the screenshot upload tool.
 
 ## Common Errors
 
-- `agent_auth_failed`: the secure Agent key is missing or wrong. Ask an admin to update secure MCP/environment settings.
+- `missing_agent_auth`: start DealDash login authorization and send the approval link to the user.
+- `agent_auth_failed`: the agent token is missing, expired, or invalid. Start a new DealDash login authorization link.
 - `agent_route_not_allowed`: use only the documented DealDash Agent Bridge tools.
 - `agent_approval_required`: explain the change and ask for approval before retrying.
 - `agent_cross_account_denied`: stop. Do not guess IDs or try another account.
@@ -79,62 +82,3 @@ to PNG, JPG, or WebP before calling the screenshot upload tool.
 - Stale memory: list active memories, then archive the stale one.
 
 Agent reference: https://docs.drdj.me/internal/dealdash-agent-bridge-plugin
-
-## Optional Render MCP
-
-Use Render MCP only for deployment infrastructure:
-
-- services
-- deploy status
-- logs
-- metrics
-- databases
-- environment-variable troubleshooting
-
-Use DealDash MCP for screenshots, LinkShot logs, short links, deals, contacts,
-tasks, payments, and memory.
-
-Hosted MCP URL:
-
-```text
-https://mcp.render.com/mcp
-```
-
-Secure env name:
-
-```text
-RENDER_API_KEY
-```
-
-For HTTP MCP clients:
-
-```toml
-[mcp_servers.render]
-url = "https://mcp.render.com/mcp"
-http_headers = { Authorization = "Bearer <YOUR_RENDER_API_KEY>" }
-```
-
-For mcp-remote clients:
-
-```json
-{
-  "mcpServers": {
-    "render": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "mcp-remote",
-        "https://mcp.render.com/mcp",
-        "--header",
-        "Authorization: Bearer ${RENDER_API_KEY}"
-      ],
-      "env": {
-        "RENDER_API_KEY": "<YOUR_RENDER_API_KEY>"
-      }
-    }
-  }
-}
-```
-
-Simple guide: https://docs.drdj.me/agents/render-mcp-setup
-Official docs: https://render.com/docs/mcp-server

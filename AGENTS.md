@@ -8,15 +8,14 @@ Tell the user:
 
 1. "I will start read-only."
 2. "I will not ask for your DealDash password."
-3. "If an Agent key is needed, enter it only in the secure MCP/environment setup."
-4. "If a Render key is needed, enter it only in the secure MCP/environment setup."
-5. "I will ask before changing deals, payments, screenshots, links, sharing, or Render settings."
+3. "If DealDash is not connected, I will send a DealDash login approval link."
+4. "I will not ask for API keys, service secrets, or internal IDs."
+5. "I will ask before changing deals, payments, screenshots, links, sharing, or external messages."
 
 ## Setup Links
 
 - Simple human guide: https://docs.drdj.me/agents/agent-quick-start
 - Public setup kit: https://github.com/djasha/dealdash-agent-kit
-- Optional Render MCP setup: https://docs.drdj.me/agents/render-mcp-setup
 - Advanced reference, only if exact tool names are needed: https://docs.drdj.me/internal/dealdash-agent-bridge-plugin
 
 ## Terminal Setup Command
@@ -29,6 +28,8 @@ cd dealdash-agent-kit
 ## Safe Defaults
 
 - Default to read-only.
+- If not connected, use `agent_auth_start` and send the returned `authorizeUrl` to the user.
+- Poll with `agent_auth_status` only after the user opens the link and approves.
 - Use `context.search` before guessing deal, screenshot, view log, or memory IDs.
 - Use `deals.view_logs` for LinkShot View Logs.
 - Use `screenshots.list_latest` for recent screenshot checks.
@@ -36,8 +37,6 @@ cd dealdash-agent-kit
 - Redacted screenshot references must stay redacted unless the user has authorized screenshot access.
 - Use `memory.create` only after showing the exact note to the user.
 - Use `memory.archive` for stale memory; do not promise permanent deletion.
-- Use Render MCP only for deploys, logs, metrics, services, databases, and environment-variable troubleshooting.
-- Keep `RENDER_API_KEY` in secure MCP/environment settings only.
 
 ## Approval Needed
 
@@ -47,13 +46,13 @@ Ask for approval before:
 - creating, updating, or deleting payments
 - deleting screenshots or short links
 - changing visibility or team sharing
-- changing Render service settings or environment variables
 - sending external messages
 
 ## Never Do This
 
 - Never ask for a DealDash password in chat.
 - Never print service secrets.
+- Never ask a normal user for API keys, service secrets, or internal IDs.
 - Never commit `.env` files.
 - Never guess another user's ID.
 - Never bypass approval gates.
