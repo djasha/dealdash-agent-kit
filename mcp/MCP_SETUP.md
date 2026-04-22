@@ -28,7 +28,7 @@ Do not write real secrets into this repo.
 3. Poll with `agent_auth_status` after the user signs in and approves the link.
 4. Never ask normal users for API keys, service secrets, internal IDs, or passwords.
 5. Never print secrets back to the user.
-6. Ask before write actions.
+6. Follow the DealDash write policy; always ask before deleting.
 
 If `agent_auth_start` is unavailable because MCP is not connected yet, use the
 public HTTPS login-link bootstrap instead:
@@ -41,6 +41,8 @@ curl -fsS -X POST https://dealdash.neonoir.ai/api/agent/auth/start \
 
 Send only `auth.authorizeUrl` to the user. Keep `auth.deviceCode`,
 `auth.statusEndpoint`, and any approved token inside your tool/session state.
+If status reports `connectionState: "token_already_claimed"` without a newly
+stored token, start a fresh login-link authorization for the current AI session.
 Normal setup is not blocked by missing internal operator env vars or deployment
 settings.
 
@@ -89,8 +91,9 @@ to PNG, JPG, or WebP before calling the screenshot upload tool.
 
 - `missing_agent_auth`: start DealDash login authorization and send the approval link to the user.
 - `agent_auth_failed`: the agent token is missing, expired, or invalid. Start a new DealDash login authorization link.
-- `agent_route_not_allowed`: use only the documented DealDash Agent Bridge tools.
-- `agent_approval_required`: explain the change and ask for approval before retrying.
+- `token_already_claimed`: start a fresh login authorization link for the current AI session.
+- `agent_route_not_enabled`: use only the documented DealDash Agent Bridge tools.
+- `approval_required`: explain the change and ask for approval before retrying.
 - `agent_cross_account_denied`: stop. Do not guess IDs or try another account.
 - Empty screenshots/logs: check account, filters, LinkShot upload status, and shared/team scope.
 - Stale memory: list active memories, then archive the stale one.

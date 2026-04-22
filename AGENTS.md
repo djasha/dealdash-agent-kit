@@ -10,7 +10,7 @@ Tell the user:
 2. "I will not ask for your DealDash password."
 3. "If DealDash is not connected, I will send a DealDash login approval link."
 4. "I will not ask for API keys, service secrets, or internal IDs."
-5. "I will ask before changing deals, payments, screenshots, links, sharing, or external messages."
+5. "I will follow the DealDash write policy, and I will always ask before deleting anything."
 
 ## Setup Links
 
@@ -39,6 +39,7 @@ cd dealdash-agent-kit
 
 - Send only `auth.authorizeUrl` to the user. Keep `auth.deviceCode`, `auth.statusEndpoint`, and any approved token inside your tool/session state.
 - Poll with `agent_auth_status` or `auth.statusEndpoint` only after the user opens the link and approves.
+- If status reports `connectionState: "token_already_claimed"` without a new stored token, start a fresh login approval link for the current AI session.
 - Do not report normal setup as blocked by missing internal operator env vars or deployment settings.
 - Use `context.search` before guessing deal, screenshot, view log, or memory IDs.
 - Use `deals.view_logs` for LinkShot View Logs.
@@ -48,11 +49,17 @@ cd dealdash-agent-kit
 - Use `memory.create` only after showing the exact note to the user.
 - Use `memory.archive` for stale memory; do not promise permanent deletion.
 
-## Approval Needed
+## Write Policy
 
-Ask for approval before:
+- Read first before making changes.
+- If DealDash reports `allow_non_delete_writes`, non-delete writes can run after briefly stating what you are doing.
+- If DealDash requires approval, explain the change and wait before writing.
+- Always ask before deleting anything.
+
+Extra care is needed for:
 
 - creating or updating deals
+- bulk adding LinkShot view checks that create missing deals
 - creating, updating, or deleting payments
 - deleting screenshots or short links
 - changing visibility or team sharing

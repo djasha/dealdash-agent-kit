@@ -47,7 +47,7 @@ Then read these files in order:
 - shorten a link or upload an image when the user explicitly asks
 - save a useful memory only after showing the exact note to the user
 
-The first five are read-only checks. Short links, screenshot uploads, and memory creation create DealDash records, so ask before doing them.
+The first five are read-only checks. Use the DealDash write policy before changing data. Deletes always need explicit confirmation.
 
 ## Important Safety Rules
 
@@ -56,7 +56,8 @@ The first five are read-only checks. Short links, screenshot uploads, and memory
 - Normal users should approve the DealDash login link, not paste API keys.
 - Service secrets are only for internal operator-managed deployments.
 - Missing MCP setup is not a reason to ask for secrets. If HTTPS is available, use the public login-link start endpoint.
-- Start read-only, then ask for approval before writes.
+- Start read-only, then follow the DealDash write policy before writes.
+- Always ask before deleting anything.
 - Never send payment details, secrets, or private local file paths unless the user explicitly approves the exact action.
 
 ## Common Problems
@@ -66,6 +67,7 @@ The first five are read-only checks. Short links, screenshot uploads, and memory
 | User only wants help, not setup details | Send them to DealDash > Tools > AI Agent Setup and ask them to copy the prompt.                                          |
 | Agent asks for API keys or IDs          | Ask it to use DealDash login-link auth with MCP or direct HTTPS. Normal users should not paste service secrets or IDs.   |
 | Password requested by mistake           | Stop and correct course. DealDash passwords must not be pasted into chat.                                                |
+| Approval link already claimed           | Ask the agent to create a new DealDash login approval link for the current AI session.                                   |
 | No screenshots or LinkShot logs         | Check account, filters, upload status, and whether shared/team records should be included.                               |
 | Image upload fails                      | Use PNG, JPG/JPEG, WebP, GIF, AVIF, or BMP up to the configured limit. Convert SVG, HEIC, or TIFF to PNG/JPG/WebP first. |
 | Write action blocked                    | Explain what would change and ask for approval before retrying.                                                          |

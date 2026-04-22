@@ -30,8 +30,11 @@ Useful params:
 - `screenshots.list_latest`: latest screenshots.
 - `deals.view_logs`: LinkShot view history and screenshot evidence.
 - `deals.due_views`: LinkShot To-Do style checks.
-- `short_links.create_from_url`: create a DealDash short link after approval.
-- `screenshots.upload_photo`: upload an image after approval.
+- `deals.bulk_add_view_checks`: add grouped post links for a date; ask for promo codes when DealDash returns `needsPromoCode`.
+- `short_links.create_from_url`: create a DealDash short link when the user asks.
+- `short_links.get`: inspect one DealDash short link.
+- `tasks.get`: inspect one DealDash task.
+- `screenshots.upload_photo`: upload an image when the user asks.
 - `memory.create`: save a small account-scoped note after approval.
 - `memory.archive`: archive stale memory.
 

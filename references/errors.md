@@ -6,6 +6,7 @@ Keep troubleshooting short and give the user one next step.
 
 - `missing_agent_auth`: start DealDash login authorization and send the approval link to the user.
 - `agent_auth_failed`: the agent token is missing, expired, or invalid. Start a new login authorization link.
+- `token_already_claimed`: the approval link was claimed by another agent process. Start a new login authorization link for this session.
 - `invalid_agent_context`: the request id header is missing, or operator-managed auth is missing acting user context.
 - `acting_user_not_found`: the approved DealDash user is no longer available.
 

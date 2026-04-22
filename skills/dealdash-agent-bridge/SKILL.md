@@ -46,13 +46,13 @@ Use the fewest links needed:
 
 ## Tool Families
 
-- `short_links`: create from URL, list, stats, delete
+- `short_links`: create from URL, list, get, stats, delete
 - `screenshots`: upload photo, capture URL, reserve, link to deal, get, list latest, delete
-- `deals`: search, get, get latest, create, update, find by URL, due views, view logs, progress
+- `deals`: search, get, get latest, create, update, find by URL, due views, view logs, bulk add view checks, progress
 - `context`: search and resource hints
 - `memory`: list, create, archive
 - `payments`: list, create, update, delete
-- `tasks`: list, get latest, create, complete, reopen
+- `tasks`: list, get, get latest, create, complete, reopen
 - `contacts`: search, get, get latest, upsert, by phone, deals, notes, labels, counts, duplicates
 - `influencers`: search, get, get latest, upsert, by phone, by promo code, stats, last progress
 - `activity`: feed and analytics
@@ -76,6 +76,8 @@ curl -fsS -X POST https://dealdash.neonoir.ai/api/agent/auth/start \
 
 Send only `auth.authorizeUrl` to the user. Keep `auth.deviceCode`,
 `auth.statusEndpoint`, and any approved token inside your tool/session state.
+If status reports `connectionState: "token_already_claimed"` without a newly
+stored token, start a fresh login-link authorization for this agent process.
 Do not ask for internal operator secrets, user IDs, or deployment settings for
 normal setup.
 
@@ -96,8 +98,9 @@ If exact operation details are needed, read `references/tools.md`. If an error a
 - Tier 0 reads: no approval required.
 - Tier 1 low-risk writes: short links, screenshot uploads, screenshot linking, notes, labels, and tasks may be allowed.
 - Tier 2 sensitive writes: deal updates, payments, deletes, and visibility changes require approval.
+- When the connection reports `allow_non_delete_writes`, non-delete Tier 2 writes can run after briefly stating the intended change. Delete-shaped routes still require explicit approval.
 
-Ask before any write. Explain what will change and why.
+Always ask before deleting. When approval is required, explain what will change and why before retrying.
 
 ## LinkShot View Logs
 
@@ -121,12 +124,23 @@ or turn an image into a short DealDash link. PNG, JPG/JPEG, WebP, GIF, AVIF, and
 BMP are accepted by default up to the configured limit. If the user sends SVG,
 HEIC, or TIFF, convert it to PNG, JPG, or WebP first.
 
+## Bulk LinkShot View Checks
+
+Use `deals.bulk_add_view_checks` when the user sends grouped post links plus a
+post date. Pass `linksText` with blank lines between people/groups, or
+structured `collections` with `urls`, optional `promoCode`, and optional
+`name`.
+
+If DealDash returns `needsPromoCode`, reply with those grouped links and ask
+only for the missing promo codes. Do not invent promo codes.
+
 ## Error Handling
 
 - `missing_agent_auth`: start DealDash login authorization with MCP or direct HTTPS and send the approval link to the user.
 - `agent_auth_failed`: the agent token is missing, expired, or invalid. Start a new login authorization link with MCP or direct HTTPS.
-- `agent_route_not_allowed`: stop and use only allowlisted tools.
-- `agent_approval_required`: request approval before retrying.
+- `token_already_claimed`: start a fresh login authorization link for the current AI session.
+- `agent_route_not_enabled`: stop and use only allowlisted tools.
+- `approval_required`: request approval before retrying.
 - `agent_cross_account_denied`: stop. Do not guess IDs.
 - `invalid_media`: ask for PNG, JPG/JPEG, WebP, GIF, AVIF, or BMP image bytes under the configured size limit, or convert unsupported formats first.
 - `capture_blocked_private_url`: do not bypass in production.

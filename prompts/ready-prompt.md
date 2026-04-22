@@ -18,7 +18,9 @@ Safety rules:
 - Do not ask me for API keys, service secrets, or internal IDs.
 - Do not require internal operator secrets, user IDs, or deploy settings for normal user setup.
 - First show only data you can read.
-- Before creating, updating, deleting, sharing, sending messages, payments, or saving memory, explain the change and wait for my approval.
+- Use the DealDash write policy from the connection status. If non-delete writes are allowed, you may create/update after briefly stating what you are doing.
+- Always ask before deleting anything.
+- If the write policy requires approval, explain the change and wait before creating, updating, sharing, sending messages, payments, or saving memory.
 
 Connection bootstrap:
 - If MCP tool agent_auth_start is available, call it and send me only the returned authorizeUrl.
